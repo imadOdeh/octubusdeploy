@@ -1,0 +1,43 @@
+step "deploy-to-ııs" {
+    name = "Deploy to IIS"
+    properties = {
+        Octopus.Action.TargetRoles = "daimamoda-480-targets"
+    }
+
+    action {
+        action_type = "Octopus.IIS"
+        properties = {
+            Octopus.Action.EnabledFeatures = ",Octopus.Features.IISWebSite,Octopus.Features.ConfigurationTransforms,Octopus.Features.ConfigurationVariables"
+            Octopus.Action.IISWebSite.ApplicationPoolFrameworkVersion = "v4.0"
+            Octopus.Action.IISWebSite.ApplicationPoolIdentityType = "ApplicationPoolIdentity"
+            Octopus.Action.IISWebSite.ApplicationPoolName = "Nop480_Frontend"
+            Octopus.Action.IISWebSite.Bindings = "[{\"protocol\":\"http\",\"port\":\"80\",\"host\":\"\",\"thumbprint\":null,\"certificateVariable\":null,\"requireSni\":\"False\",\"enabled\":\"True\"}]"
+            Octopus.Action.IISWebSite.CreateOrUpdateWebSite = "True"
+            Octopus.Action.IISWebSite.DeploymentType = "webSite"
+            Octopus.Action.IISWebSite.EnableAnonymousAuthentication = "False"
+            Octopus.Action.IISWebSite.EnableBasicAuthentication = "False"
+            Octopus.Action.IISWebSite.EnableWindowsAuthentication = "True"
+            Octopus.Action.IISWebSite.StartApplicationPool = "True"
+            Octopus.Action.IISWebSite.StartWebSite = "True"
+            Octopus.Action.IISWebSite.WebApplication.ApplicationPoolFrameworkVersion = "v4.0"
+            Octopus.Action.IISWebSite.WebApplication.ApplicationPoolIdentityType = "ApplicationPoolIdentity"
+            Octopus.Action.IISWebSite.WebRootType = "packageRoot"
+            Octopus.Action.IISWebSite.WebSiteName = "Nop480_Frontend"
+            Octopus.Action.Package.AutomaticallyRunConfigurationTransformationFiles = "True"
+            Octopus.Action.Package.AutomaticallyUpdateAppSettingsAndConnectionStrings = "True"
+            Octopus.Action.Package.DownloadOnTentacle = "False"
+            Octopus.Action.Package.FeedId = "octopus-server-built-in"
+            Octopus.Action.Package.PackageId = "Octupus_Test_Deployment"
+        }
+        worker_pool_variable = ""
+
+        packages {
+            acquisition_location = "Server"
+            feed = "octopus-server-built-in"
+            package_ıd = "Octupus_Test_Deployment"
+            properties = {
+                SelectionMode = "immediate"
+            }
+        }
+    }
+}
